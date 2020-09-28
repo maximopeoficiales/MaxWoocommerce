@@ -1,4 +1,18 @@
 try {
+  setInterval(() => {
+    let errors = document.querySelector(".woocommerce-error");
+    if (errors !== null) {
+      let err_latitud = errors.querySelector("[data-id='ce_latitud']");
+      let err_longitud = errors.querySelector("[data-id='ce_longitud']");
+      if (err_latitud !== null || err_latitud !== null) {
+        err_latitud.innerHTML = `
+        <strong>Seleccione su direccion con el mapa de Google maps por favor</strong>
+        `;
+        err_longitud.style.display = "none";
+      }
+    }
+  }, 1000);
+
   jQuery(function (g) {
     /* bloque de codigo para calcular el envio */
     if ("undefined" == typeof wc_checkout_params) return !1;
@@ -43,7 +57,7 @@ try {
       let postcode = document.querySelector("#billing_postcode.input-text");
       v.queue_update_checkout(postcode);
     } /* div de direccion donde se pondra el mapa */
-/*     let divDireccion = document.querySelector("#billing_address_1_field");
+    /*     let divDireccion = document.querySelector("#billing_address_1_field");
     let mapa =
       '<div style="width: 100%; height: 480px" id="map-canvas"></div>';
     let botones =
@@ -55,12 +69,13 @@ try {
     /* fin de insercion de mapas */
     const input_direccion = "#billing_address_1.input-text";
     /* vacio y oculto algunos campos */
+    document.querySelector("#ce_latitud").value = "";
+    document.querySelector("#ce_longitud").value = "";
     document.querySelector(input_direccion).value = "";
     document.querySelector("#ce_distanciakm_field").style.display = "none";
     document.querySelector("#ce_latitud_field").style.display = "none";
     document.querySelector("#ce_longitud_field").style.display = "none";
     document.querySelector("#billing_postcode_field").style.display = "none";
-   
 
     let rendererOptions = {
       draggable: true /* activamos el pin movible */,
@@ -287,5 +302,7 @@ try {
     // google.maps.event.addDomListener(window, "load", initialize);
   });
 } catch (error) {
-  console.warn("Ocurrio en error actualize el plugin :D");
+  console.warn(
+    "Ocurrio en error actualize el plugin :D o contacte con soporte"
+  );
 }

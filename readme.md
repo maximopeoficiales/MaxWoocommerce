@@ -29,8 +29,8 @@ Tener instalado los siguientes plugins
 
 - ✅ Activamos el billing_postcode
 - ✅ Creamos ce_distanciakm
-- ✅ Creamos ce_latitud
-- ✅ Creamos ce_longitud
+- ✅ Creamos ce_latitud (required)
+- ✅ Creamos ce_longitud (required)
 
 ![image_campos_custom_fields]
 
