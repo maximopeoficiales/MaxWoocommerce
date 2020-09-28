@@ -3,12 +3,12 @@ require __DIR__ . '/vendor/autoload.php';
 // error_reporting(0);
 
 /* 
-     Plugin Name: Max Functions 
+     Plugin Name: MaxWoocommerce
      Plugin URI:
-     Description: Añade endpoints y modificaciones necesarios para maxco-proyect
+     Description: Funcionalidades Extras a Woocommerce
      Version: 1.0.0
      Author Uri: Maximo Junior Apaza Chirhuana
-     Text Domain: Max Functions
+     Text Domain: MaxWoocommerce
 */
 /* Previene que puedan ver este codigo  */
 
@@ -73,4 +73,3 @@ add_action('init', 'max_functions_init', 0);
 
 
 require 'inc/woo-functions.php';
-require 'inc/endpoints.php';

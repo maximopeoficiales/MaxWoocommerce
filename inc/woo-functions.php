@@ -37,25 +37,8 @@ function max_functions_getWoocommerce()
      );
      return $woocommerce;
 }
-function max_functions_get_current_user()
-{
 
-     //Los filtros predeterminados usan esto para determinar el usuario actual a partir de las cookies de la solicitud, si están disponibles.
-     $user_id = apply_filters('determine_current_user', false);
-     /* $user_data = get_userdata($user_id); */
 
-     return [
-          'user_id' => $user_id,
-
-     ];
-}
-add_action("rest_api_init", function () {
-     register_rest_route("max_functions/v1", "/get_current_user", array(
-          "methods" => "GET",
-          "callback" => "max_functions_get_current_user",
-          'args'            => array(),
-     ));
-});
 
 // template ojito del pedido 
 add_action('admin_footer', 'order_preview_template');
@@ -532,60 +515,7 @@ function my_custom_head_js()
 
 add_action('wp_footer', 'my_custom_js');
 add_action('wp_head', 'my_custom_head_js');
-add_action('woocommerce_webhook_delivery', 'max_function_webhook_custom', 1, 5);
-function max_function_webhook_custom($http_args, $response, $duration, $arg, $id)
-{
-     /* get_site_url(); */
-     function arrayToXml($array, &$xml)
-     {
-          foreach ($array as $key => $value) {
-               if (is_array($value)) {
-                    if (is_int($key)) {
-                         $key = "e";
-                    }
-                    $label = $xml->addChild($key);
-                    arrayToXml($value, $label);
-               } else {
-                    $xml->addChild($key, $value);
-               }
-          }
-          return $xml;
-     }
-     function getUrlWebhook($id_wb)
-     {
-          $woocommerce = max_functions_getWoocommerce();
-          $data = $woocommerce->get("webhooks/$id_wb");
-          return $data->delivery_url;
-     }
-     function execWebHook($data, $urlSend)
-     {
-          $array = json_decode($data, true);
-          $xml = new SimpleXMLElement('<root/>');
-          $newXml = arrayToXml($array, $xml);
-          $curl = curl_init();
-          curl_setopt_array($curl, array(
-               CURLOPT_URL => $urlSend,
-               CURLOPT_RETURNTRANSFER => true,
-               CURLOPT_ENCODING => "",
-               CURLOPT_MAXREDIRS => 10,
-               CURLOPT_TIMEOUT => 0,
-               CURLOPT_FOLLOWLOCATION => true,
-               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-               CURLOPT_CUSTOMREQUEST => "POST",
-               CURLOPT_POSTFIELDS => $newXml->asXML(),
-               CURLOPT_HTTPHEADER => array(
-                    "Content-Type: application/xml"
-               ),
-          ));
-          $response = curl_exec($curl);
-          curl_close($curl);
-          echo $response;
-     }
-     $idWebHook = $http_args['headers']['X-WC-Webhook-ID'];
-     $urlSend = getUrlWebhook($idWebHook);
-     $data = $http_args["body"];
-     execWebHook($data, $urlSend);
-}
+
 function action_woocommerce_after_checkout_billing_form($wccs_custom_checkout_field_pro)
 {     ?>
      <div class="btn-group text-center" style="text-align:center; margin-bottom:10px;  margin-top:10px;display: flex;justify-content:center  !important;align-items:center !important;" role="group">

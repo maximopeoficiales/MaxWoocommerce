@@ -8,9 +8,6 @@
     ],
     "require": {
         "automattic/woocommerce": "^3.0",
-        "dompdf/dompdf": "^0.8.5",
-        "mjohnson/type-converter": "^2.0",
-        "rakit/validation": "^1.4",
-        "servo/fluidxml": "^1.21"
+        "dompdf/dompdf": "^0.8.5"
     }
 }
