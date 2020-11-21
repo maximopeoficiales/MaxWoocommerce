@@ -99,6 +99,17 @@ foreach ($order->meta_data as $e) {
                               <td class="text-right"><?= $order->currency_symbol ?> <?= number_format($item->price * $item->quantity, 2, ".", "")  ?></td>
                          </tr>
                     <?php } ?>
+                    <!-- se agrego igv -->
+                    <?php if (isset($order->tax_lines)) {
+                         foreach ($order->tax_lines as $emp) {
+                    ?>
+                              <tr>
+                                   <td colspan="2">IGV</td>
+                                   <td class="text-right"><?= $order->currency_symbol ?> <?= number_format($emp->tax_total, 2, ".", "")  ?></td>
+                              </tr>
+
+                    <?php }
+                    } ?>
                     <?php if (isset($order->shipping_lines)) {
                          foreach ($order->shipping_lines as $envio) {
                     ?>

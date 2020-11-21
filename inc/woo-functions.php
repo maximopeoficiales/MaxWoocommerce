@@ -371,6 +371,25 @@ function action_woocommerce_admin_order_data_after_shipping_address()
                                                                                                </td>
                                                                                           </tr>
                                                                                      <?php } ?>
+                                                                                       <!-- se agrego en modelos el igv -->
+                                                                                       <?php if (isset($order->tax_lines)) {
+                                                                                          foreach ($order->tax_lines as  $imp) {
+                                                                                     ?>
+                                                                                               <tr class="wc-order-preview-table__item wc-order-preview-table__item - 3">
+                                                                                                    <td class="wc- order-preview-table__column - product">
+                                                                                                         IGV
+                                                                                                         <div class="wc-order-item-sku"></div>
+                                                                                                    </td>
+                                                                                                    <td class="wc-order-preview- table__column - cantidad"></td>
+                                                                                                    <td class="wc-order-preview-table__column - total">
+                                                                                                         <span class="woocommerce-Price-amount amount">
+                                                                                                              <span class="woocommerce-Price-currencySymbol"> <?= $order->currency_symbol ?></span> <?= number_format($imp->tax_total, 2, ".", "")  ?>
+                                                                                                         </span>
+                                                                                                    </td>
+                                                                                               </tr>
+                                                                                     <?php
+                                                                                          }
+                                                                                     } ?>
                                                                                      <?php if (isset($order->shipping_lines)) {
                                                                                           foreach ($order->shipping_lines as  $envio) {
                                                                                      ?>
