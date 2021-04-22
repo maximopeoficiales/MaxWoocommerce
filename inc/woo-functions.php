@@ -516,17 +516,6 @@ function my_custom_head_js()
 add_action('wp_footer', 'my_custom_js');
 add_action('wp_head', 'my_custom_head_js');
 
-function action_woocommerce_after_checkout_billing_form($wccs_custom_checkout_field_pro)
-{     ?>
-     <div class="btn-group text-center" style="text-align:center; margin-bottom:10px;  margin-top:10px;display: flex;justify-content:center  !important;align-items:center !important;" role="group">
-          <button type="button" class="btn btn-secondary mr-2" id="miubicacion"><i class="fas fa-map-marker-alt fa-fw"></i>Mi Ubicacion</button>
-          <button type="button" class="btn btn-secondary ml-2" id="buscar"><i class="fas fa-search-location fa-fw"></i>Buscar</button>
-     </div>
-     <div style="width: 100%; height: 480px" id="map-canvas"></div>
-<?php
-};
-add_action('woocommerce_after_checkout_billing_form', 'action_woocommerce_after_checkout_billing_form', 10, 1);
-
 function me_post_pdf()
 {
      if (isset($_POST['me_post_pdf']) && isset($_POST['id_order'])) {
@@ -559,6 +548,34 @@ function me_post_pdf()
      }
 }
 
-add_action('init', 'me_post_pdf');
+//add_action('init', 'me_post_pdf');
+
+
+
+//add_action( 'woocommerce_form_field_text','additional_paragraph_after_billing_address_1', 10, 4 );
+function additional_paragraph_after_billing_address_1( $field, $key, $args, $value ){
+    if ( is_checkout() && $key == 'billing_address_1' ) {
+        $field .= '<p class="form-row red_text" style="color:red;">
+        Ingresa tu dirección y pon "Buscar" o usa el mapa para ubicar tu dirección de envío</p>
+        ';
+    
+     }
+    return $field;
+}
+// se activo el mapa de google maps
+
+add_action( 'woocommerce_form_field_text','additional_paragraph_after_billing_address_12', 10, 4 );
+function additional_paragraph_after_billing_address_12( $field, $key, $args, $value ){
+    if ( is_checkout() && $key == 'billing_address_1' ) {
+     $field .= '
+     <div class="form-row  btn-group text-center" style="text-align:center; margin-bottom:10px;  margin-top:10px;display: flex;justify-content:center  !important;align-items:center !important;" role="group">
+         <button type="button" class="btn btn-secondary mr-2" id="miubicacion"><i class="fas fa-map-marker-alt fa-fw"></i>Mi Ubicacion</button>         <button type="button" class="btn btn-secondary ml-2" id="buscar"><i class="fas fa-search-location fa-fw"></i>Buscar</button>
+         </div>
+         <div class="form-row" style="width: 100%; height: 480px" id="map-canvas"></div>
+     ';
+    
+     }
+    return $field;
+}
 
 /* include __DIR__ . "/endpoints.php"; */
